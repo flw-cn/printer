@@ -14,7 +14,13 @@ type Printer interface {
 	Println(a ...interface{}) (n int, err error)
 }
 
+type WritePrinter interface {
+	Printer
+	io.Writer
+}
+
 type SimplePrinter struct {
+	WritePrinter
 	w io.Writer
 }
 
@@ -47,4 +53,8 @@ func (p SimplePrinter) Println(a ...interface{}) (n int, err error) {
 		p.w = os.Stdout
 	}
 	return fmt.Fprintln(p.w, a...)
+}
+
+func (p SimplePrinter) Write(buf []byte) (n int, err error) {
+	return p.w.Write(buf)
 }
