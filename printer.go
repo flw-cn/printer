@@ -18,6 +18,12 @@ type SimplePrinter struct {
 	w io.Writer
 }
 
+func NewSimplePrinter(w io.Writer) *SimplePrinter {
+	return &SimplePrinter{
+		w: w,
+	}
+}
+
 func (p *SimplePrinter) SetOutput(w io.Writer) {
 	p.w = w
 }
